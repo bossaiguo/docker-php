@@ -1,0 +1,7 @@
+/.env
+/.vagrant
+/.idea
+.git
+dump.rdb
+/web.config
+.DS_Store

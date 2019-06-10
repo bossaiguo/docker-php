@@ -1,0 +1,35 @@
+# 注意这里的vertion是docker-compose yaml格式的version 不同的version支持不同的语法
+version: '3'
+services:
+    nginx:
+        # 依赖关系 先跑php
+        depends_on:
+            - php
+        #image: nginx:${NGINX_VERSION}
+        build: nginx/
+        # 数据卷
+        volumes:
+            - ${LOCAL_STOARGE_PATH}/nginx/conf.d:/etc/nginx/conf.d:ro
+            # 证书挂载保存，需要用的时候，进容器执行 sh /usr/local/bin/docker-make-ssl.sh，然后cp -R /etc/nginx/ssl /etc/nginx/ca
+            - ${LOCAL_STOARGE_PATH}/nginx/ca:/etc/nginx/ca
+            - ${LOCAL_STOARGE_PATH}/nginx/my_modules:/etc/nginx/my_modules:ro
+            - ${LOCAL_WEB_PATH}:/var/www/html
+        # 端口映射
+        ports:
+            - 13802:80
+
+        # 容器名称
+        container_name: composer-nginx
+        #restart: always
+    php:
+        build: php/
+        working_dir: /works
+        volumes:
+            - ${LOCAL_WEB_PATH}:/var/www/html
+            - ${LOCAL_STOARGE_PATH}/php/ext:/etc/php/my_ext
+            - ${LOCAL_STOARGE_PATH}/php/php.ini:/usr/local/etc/php/php.ini:ro
+        container_name: composer-php
+        # 端口映射
+        ports:
+            - 13803:9000
+        #restart: always

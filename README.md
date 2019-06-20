@@ -1,7 +1,5 @@
 #  Docker化PHP环境
 
-## 此构建参考学习：https://github.com/opso-code/docker-php
-
 ## 为合适自己的工作和开发环境而打造，for bossaiguo
 
 - 请配置docker的Registry mirrors为中国大陆的 daocloud.io（加速器）

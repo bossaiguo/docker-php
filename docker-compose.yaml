@@ -19,7 +19,7 @@ services:
             - 13802:80
 
         # 容器名称
-        container_name: composer-nginx
+        container_name: compose-nginx
         #restart: always
     php:
         build: php/
@@ -27,9 +27,13 @@ services:
         volumes:
             - ${LOCAL_WEB_PATH}:/var/www/html
             - ${LOCAL_STOARGE_PATH}/php/ext:/etc/php/my_ext
+            - ${LOCAL_STOARGE_PATH}/supervisor/supervisord.conf:/etc/supervisord.conf
+            - ${LOCAL_STOARGE_PATH}/supervisor/conf:/etc/supervisor
+            - ${LOCAL_STOARGE_PATH}/supervisor/log/supervisord.log:/var/log/supervisor/supervisord.log
             - ${LOCAL_STOARGE_PATH}/php/php.ini:/usr/local/etc/php/php.ini:ro
-        container_name: composer-php
+        container_name: compose-php
         # 端口映射
         ports:
             - 13803:9000
+            - 5200:5200
         #restart: always

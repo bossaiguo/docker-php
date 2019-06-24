@@ -120,8 +120,13 @@ RUN curl -sS https://install.phpcomposer.com/installer | php \
     && composer self-update --clean-backups \
     && composer config -g repo.packagist composer https://packagist.laravel-china.org
 
+# install supervior
+RUN apt-get install -y supervisor
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisord.conf
+
 # 对Seaslog默认存储目录增加www-data owner && 对Php默认bash登陆目录赋予www-data:www-data owner
 RUN chown -R www-data:www-data /var/log/www && chown -R www-data:www-data /var/www
 
-EXPOSE 9000
-CMD ["php-fpm"]
+EXPOSE 9000 5200
+ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

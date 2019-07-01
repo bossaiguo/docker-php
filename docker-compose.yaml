@@ -13,19 +13,22 @@ services:
             # 证书挂载保存，需要用的时候，进容器执行 sh /usr/local/bin/docker-make-ssl.sh，然后cp -R /etc/nginx/ssl /etc/nginx/ca
             - ${LOCAL_STOARGE_PATH}/nginx/ca:/etc/nginx/ca
             - ${LOCAL_STOARGE_PATH}/nginx/my_modules:/etc/nginx/my_modules:ro
-            - ${LOCAL_WEB_PATH}:/var/www/html
+            - ${LOCAL_WEB_PATH}/log/error.log:/var/log/nginx/api.log
+            - ${LOCAL_WEB_PATH}:/var/www/html/lawApi
+            - ${CHAT}:/var/www/html/chat
         # 端口映射
         ports:
-            - 13802:80
+            - 80:80
 
         # 容器名称
         container_name: compose-nginx
         #restart: always
     php:
         build: php/
-        working_dir: /works
+        working_dir: /var/www/html
         volumes:
-            - ${LOCAL_WEB_PATH}:/var/www/html
+            - ${LOCAL_WEB_PATH}:/var/www/html/lawApi
+            - ${CHAT}:/var/www/html/chat
             - ${LOCAL_STOARGE_PATH}/php/ext:/etc/php/my_ext
             - ${LOCAL_STOARGE_PATH}/supervisor/supervisord.conf:/etc/supervisord.conf
             - ${LOCAL_STOARGE_PATH}/supervisor/conf:/etc/supervisor
@@ -34,6 +37,6 @@ services:
         container_name: compose-php
         # 端口映射
         ports:
-            - 13803:9000
+            - 9001:9000
             - 5200:5200
         #restart: always

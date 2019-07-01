@@ -3,5 +3,6 @@
 /.idea
 .git
 dump.rdb
+/www
 /web.config
 .DS_Store

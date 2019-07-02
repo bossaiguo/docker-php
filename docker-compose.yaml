@@ -14,8 +14,7 @@ services:
             - ${LOCAL_STOARGE_PATH}/nginx/ca:/etc/nginx/ca
             - ${LOCAL_STOARGE_PATH}/nginx/my_modules:/etc/nginx/my_modules:ro
             - ${LOCAL_WEB_PATH}/log/error.log:/var/log/nginx/api.log
-            - ${LOCAL_WEB_PATH}:/var/www/html/lawApi
-            - ${CHAT}:/var/www/html/chat
+            - ${LOCAL_WEB_PATH}:/var/www/html
         # 端口映射
         ports:
             - 80:80
@@ -27,8 +26,7 @@ services:
         build: php/
         working_dir: /var/www/html
         volumes:
-            - ${LOCAL_WEB_PATH}:/var/www/html/lawApi
-            - ${CHAT}:/var/www/html/chat
+            - ${LOCAL_WEB_PATH}:/var/www/html
             - ${LOCAL_STOARGE_PATH}/php/ext:/etc/php/my_ext
             - ${LOCAL_STOARGE_PATH}/supervisor/supervisord.conf:/etc/supervisord.conf
             - ${LOCAL_STOARGE_PATH}/supervisor/conf:/etc/supervisor

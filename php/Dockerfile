@@ -46,6 +46,9 @@ RUN apt-get update -y && \
     libsqlite3-0 \
     tmux \
     keychain \
+    supervisor \
+    && mkdir -p /etc/supervisord.d/log \
+    && mkdir -p /etc/supervisord.d/conf \
     && rm -rf /var/lib/apt/lists/*
 
 # 替换VIM鼠标状态为非可视状态
@@ -57,7 +60,7 @@ ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8
 
 # install hiredis
-RUN wget --no-check-certificate https://gitee.com/oschina/hiredis/repository/archive/v0.13.3.zip -O hiredis.zip \
+ RUN wget --no-check-certificate https://gitee.com/oschina/hiredis/repository/archive/v0.13.3.zip -O hiredis.zip \
     && mkdir -p hiredis \
     && unzip hiredis.zip \
     && rm hiredis.zip \
@@ -84,10 +87,10 @@ RUN pecl channel-update pecl.php.net \
 # 一般情况，不需要用户变量缓存，所以注释掉安装apcu
 #    && printf "\n" | pecl install apcu \
 #    && docker-php-ext-enable apcu \
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb \
-    && pecl install memcached \
-    && docker-php-ext-enable memcached \
+#    && pecl install mongodb \
+#    && docker-php-ext-enable mongodb \
+#    && pecl install memcached \
+#    && docker-php-ext-enable memcached \
     && pecl install redis \
     && docker-php-ext-enable redis \
     && pecl install inotify \
@@ -121,8 +124,6 @@ RUN curl -sS https://install.phpcomposer.com/installer | php \
     && composer config -g repo.packagist composer https://packagist.laravel-china.org
 
 # install supervior
-RUN apt-get install -y supervisor
-RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisord.conf
 
 # 对Seaslog默认存储目录增加www-data owner && 对Php默认bash登陆目录赋予www-data:www-data owner

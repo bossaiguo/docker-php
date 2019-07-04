@@ -13,7 +13,7 @@ services:
             # 证书挂载保存，需要用的时候，进容器执行 sh /usr/local/bin/docker-make-ssl.sh，然后cp -R /etc/nginx/ssl /etc/nginx/ca
             - ${LOCAL_STOARGE_PATH}/nginx/ca:/etc/nginx/ca
             - ${LOCAL_STOARGE_PATH}/nginx/my_modules:/etc/nginx/my_modules:ro
-            - ${LOCAL_WEB_PATH}/log/nginx:/var/log/nginx
+            - ${LOCAL_STOARGE_PATH}/log/nginx:/var/log/nginx
             - ${LOCAL_WEB_PATH}:/var/www/html
         # 端口映射
         ports:

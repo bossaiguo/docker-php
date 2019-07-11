@@ -1,4 +1,4 @@
-#  手牵手一起
+#  手牵手一起使用 docker 搭建 PHP 环境，并使用 supervisor 管理你的 swoole 进程
 
 ## 使用本环境的一些基本说明
 
@@ -11,11 +11,11 @@
 ### 基础配置
 1. 安装Docker（官方默认会自带docker-compose 工具）, 已经安装过的可以跳过此步
 2. 对Docker Machine 设置里，配置`Setting->Daemon->Registry mirrors`,增加加速器URL，比如http://xxxx.m.daocloud.io
-3. 对Docker Machine 设置里，配置`Setting->Shared Drives(Windows)/File Sharing(Mac)`, 增加共享目录。要保证容器你所挂载本地目录一定是配置的子目录。 正确设置举例 【Windows】Share配置“E”盘,容器挂载本地目录E:/works;【Mac】Share配置“/User”, 容器挂载本地目录/User/username/works
-4. docker-compose.yaml 默认关闭了mysql,redis,mongodb,，如果需要请删除注释行.
+3. 对Docker Machine 设置里，配置`Setting->Shared Drives(Windows)/File Sharing(Mac)`, 
+
 
 ### Docker-php使用
-- 【必】复制example.env到同级目录下，并重命名.env，命令操作 
+- 复制example.env到同级目录下，并重命名.env，命令操作 
 ```shell
 cp ./example.env ./.env
 ```
@@ -26,7 +26,7 @@ cp ./example.env ./.env
 docker-compose up -d
 ```
 
-### Nginx配置
+### Nginx使用
 - 多个虚拟站点的配置，直接参考nginx/conf.d/demo.cfg， 复制粘贴demo.cfg在同目录下并重名为site1.conf, 并根据注释修改目录路径（以容器目录为准）,重命名文件必须以`conf`扩展名结尾, 举例命令行
 ```shell
 cp ./nginx/conf.d/demo.cfg ./nginx/conf.d/site1.conf

@@ -1,10 +1,10 @@
-#  Docker化PHP环境
+#  手牵手一起
 
-## 为合适自己的工作和开发环境而打造，for bossaiguo
+## 使用本环境的一些基本说明
 
 - 请配置docker的Registry mirrors为中国大陆的 daocloud.io（加速器）
 - 使用 **docker-compose up -d** 快速搭建php环境
-- 此构建基本全程使用国内镜像，构建速度杠杠的（除了php pecl和composer self-update外）
+
 
 ## 使用方法
 
@@ -12,16 +12,15 @@
 1. 安装Docker（官方默认会自带docker-compose 工具）, 已经安装过的可以跳过此步
 2. 对Docker Machine 设置里，配置`Setting->Daemon->Registry mirrors`,增加加速器URL，比如http://xxxx.m.daocloud.io
 3. 对Docker Machine 设置里，配置`Setting->Shared Drives(Windows)/File Sharing(Mac)`, 增加共享目录。要保证容器你所挂载本地目录一定是配置的子目录。 正确设置举例 【Windows】Share配置“E”盘,容器挂载本地目录E:/works;【Mac】Share配置“/User”, 容器挂载本地目录/User/username/works
-4. docker-compose.yaml 默认关闭了mysql,redis,mongodb,elasticsearch，如果需要请删除注释行.
+4. docker-compose.yaml 默认关闭了mysql,redis,mongodb,，如果需要请删除注释行.
 
 ### Docker-php使用
 - 【必】复制example.env到同级目录下，并重命名.env，命令操作 
 ```shell
 cp ./example.env ./.env
 ```
-- 【必】修改.env文件的配置。`LOCAL_STOARGE_PATH`=设置为此github clone的根目录。 比如/User/username/server/docker-php
-- 【必】修改.env文件的配置。`LOCAL_WEB_PATH`=设置为你开发项目的基础根目录, 比如/User/username/works
-- 【选】修改.env文件配置。`MYSQL_ROOT_PASSWORD`=设置MYSQL数据库初始化root的密码，默认为mysql2018
+- 【必】修改.env文件的配置。`LOCAL_STOARGE_PATH`=设置为此github clone的根目录。 比如/var/www/html/docker-php
+- 【必】修改.env文件的配置。`LOCAL_WEB_PATH`=设置为你开发项目的基础根目录, 比如/var/www/html/docker-php/www
 - 【必】启动所有命令行执行
 ```shell
 docker-compose up -d
@@ -98,7 +97,6 @@ php镜像来自官方 `php:fpm`，目前最新稳定版本是 `7.2.8`
 - apcu (可选)
 - ...
 
-支持运行基于swoole/phalcon/workerman的项目
 
 手动添加了 `composer` 并替换了国内源，修改了时区（`Asia/Shanghai`）
 
@@ -118,6 +116,12 @@ Windows 磁盘是NTFS/FAT32，不支持Ext4大文件，不能挂载，需要注�
 
 ### Beanstalk
 包含Beanstalkd + Aurora, 进入容器执行`/usr/local/aurora/aurora -c /usr/local/aurora/conf/aurora.toml`, 就可以启动Aurora
+
+
+### supervisor
+配置文件：/docker-php/supervisord.conf
+启动项目进程：/docker-php/supervisor/conf
+启动日志： /docker/log/supervisor
 
 
 ## 常用运行

@@ -105,19 +105,6 @@ php镜像来自官方 `php:fpm`，目前最新稳定版本是 `7.2.8`
 直接使用的 `nginx:latest` 镜像,需要挂载自己的PHP项目工作目录，并配置nginx/conf.d里各个站点
 可以支持HTTPS 加密协议访问（单向、双向）
 
-### mongodb
-
-直接使用的 `mongodb:latest` 镜像，根据具体情况修改 `/data/mongodb` 本地映射的数据库文件夹，如不需要可注释掉，其他数据库同理。
-Windows 磁盘是NTFS/FAT32，不支持Ext4大文件，不能挂载，需要注释挂载， Windows下无解
-
-### ElasticSearch
-
-这里强制使用ES5.5.2版本。 如果需要安装IK,请自行配置容器插件目录(`/usr/share/elasticsearch/plugins`)
-
-### Beanstalk
-包含Beanstalkd + Aurora, 进入容器执行`/usr/local/aurora/aurora -c /usr/local/aurora/conf/aurora.toml`, 就可以启动Aurora
-
-
 ### supervisor
 配置文件：/docker-php/supervisord.conf
 启动项目进程：/docker-php/supervisor/conf
